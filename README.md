@@ -1,16 +1,17 @@
 # linux-my-utils
 
 Some useful scripts used by myself on linux server. 
+[简体中文](./README-zh.md) | [English](./README.md)
 
 Current version: 0.0.0
 
-## Introduction
+## 💁‍♂️ Introduction
 
 This repository is inspired by a often occurring situation: Every time I change my working directory using `cd`, I have to type `ls` to check the files in the directory. So I write a script `cdl.sh` to combine `cd` and `ls` together.
 
 After that, I write some other scripts to make my work more efficient. This repository includes the most useful (only for myself XD) scripts I have written. Hope it can help others too :)
 
-## Environment
+## 💻️ Environment
 
 This section introduce the environment I use to develop and test these scripts. The scripts should work on other linux distributions, but I can't guarantee that.
 
@@ -24,18 +25,18 @@ Other information:
 
 - python: 3.9.7 (with conda 22.9.0)
 
-## Installation
+## ⬇️ Installation
 
 To use these scripts, clone this repository to your local machine:
 
 ```bash
-git clone
+git clone https://github.com/TreemanCHou/linux-my-utils.git
 cd linux-my-utils
 current_path=$(pwd)
 echo -e 'alias cdl="source $current_path/cdl.sh"\nalias its="sh $current_path/its.sh"\nalias upload="sh $current_path/upload.sh"\nalias download="sh $current_path/download.sh"\nalias lc="sh $current_path/count.sh"\n# alias unzip="uz"\n\n# Some kuaijiefangshi\nalias zshrc="vim ~/.zshrc"\nalias bashrc="vim ~/.bashrc"\nalias condarc="vim ~/.condarc"\nalias vimrc="vim ~/.vimrc"\nalias cls="clear"' >> ~/.zshrc
 ```
 
-## Features
+## 💡 Features
 
 ### cdl
 
@@ -95,7 +96,7 @@ For those who want to clear the terminal, but still used to type `cls` in window
 user@server:/home/user $ cls
 ```
 
-## Contact
+## ✉️ Contact
 
 If you have any questions or suggestions, please feel free to contact me or put an issue in this repository. I will reply as soon as possible.
 
