@@ -2,6 +2,8 @@
 
 Some useful scripts used by myself on linux server. 
 
+Current version: 0.0.0
+
 ## Introduction
 
 This repository is inspired by a often occurring situation: Every time I change my working directory using `cd`, I have to type `ls` to check the files in the directory. So I write a script `cdl.sh` to combine `cd` and `ls` together.
