@@ -5,4 +5,7 @@ git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugi
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 
 mv ./.zshrc-candidate ~/.zshrc
-mv ./zsh-themes/* ~/.oh-my-zsh/themes/ 
+mv ./zsh-themes/* ~/.oh-my-zsh/themes/
+
+mkdir ~/bin
+mv ./*.sh ~/bin
