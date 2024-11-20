@@ -1,7 +1,7 @@
 # linux-my-utils
 
 一些我在 Linux 服务器上使用的实用脚本。
-[简体中文](./README-zh.md) | [English](./README.md)
+[简体中文](./README.md) | [English](./README-en.md)
 
 当前版本：0.0.0
 

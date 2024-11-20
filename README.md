@@ -27,7 +27,7 @@ Other information:
 
 ## ⬇️ Installation
 
-To use these scripts, clone this repository to your local machine:
+To use these scripts, clone this repository and add some aliases to your shell configuration file. These commands only work if you have installed `git` and `zsh` on your machine.
 
 ```bash
 git clone https://github.com/TreemanCHou/linux-my-utils.git
@@ -35,6 +35,23 @@ cd linux-my-utils
 current_path=$(pwd)
 echo -e 'alias cdl="source $current_path/cdl.sh"\nalias its="sh $current_path/its.sh"\nalias upload="sh $current_path/upload.sh"\nalias download="sh $current_path/download.sh"\nalias lc="sh $current_path/count.sh"\n# alias unzip="uz"\n\n# Some kuaijiefangshi\nalias zshrc="vim ~/.zshrc"\nalias bashrc="vim ~/.bashrc"\nalias condarc="vim ~/.condarc"\nalias vimrc="vim ~/.vimrc"\nalias cls="clear"' >> ~/.zshrc
 ```
+
+For those machines which use `bash` as the default shell or use `zsh` without `oh-my-zsh`, this repo provides a `install-zsh.sh` script to install `zsh` and `oh-my-zsh` automatically. You can use the following command to install `zsh` and `oh-my-zsh`:
+
+```
+sh install-zsh.sh
+```
+
+You can switch your zsh theme manually. But because I mainly use anaconda, most original themes provided by `oh-my-zsh` are not compatible with anaconda. In the `zsh-themes` directory, I provide some modified themes that are compatible with anaconda. 
+
+In the above command, these themes are already switched to the modified themes.
+
+Here is a list of the themes I provide:
+
+- `aussiegeek`
+- `crcandy`
+- `juanghurtado`
+- `linuxonly`
 
 ## 💡 Features
 
