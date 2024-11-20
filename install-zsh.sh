@@ -5,7 +5,7 @@ if [[ "$(readlink /proc/$$/exe)" == "/usr/bin/zsh" || "$(readlink /proc/$$/exe)"
     echo "You are using zsh. Continuing ."
     
     echo "*** Step 1 : Installing oh-my-zsh ***"
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    RUNZSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
     echo "*** Step 2 : Installing Zsh Plugins from github.com ***"
     git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
@@ -20,9 +20,6 @@ if [[ "$(readlink /proc/$$/exe)" == "/usr/bin/zsh" || "$(readlink /proc/$$/exe)"
     mkdir ~/bin
     cp ./*.sh ~/bin
     cp ./.tmux.conf ~/ 
-
-    exec zsh
-
 else
     echo "You are not using zsh."
     # 检测 zsh 是否安装
@@ -47,9 +44,6 @@ else
             mkdir ~/bin
             cp ./*.sh ~/bin
             cp ./.tmux.conf ~/ 
-
-            exec zsh
-
         else
             echo "Failed to change the default shell. Please run 'chsh -s $(command -v zsh)' manually with the correct permissions."
             exit 1
@@ -59,3 +53,5 @@ else
     fi
     exit 1
 fi
+
+exec zsh
