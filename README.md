@@ -32,7 +32,7 @@ To use these scripts, clone this repository and add some aliases to your shell c
 ```bash
 git clone https://github.com/TreemanCHou/linux-my-utils.git
 cd linux-my-utils
-current_path=$(pwd)
+export current_path=$(pwd)
 echo -e 'alias cdl="source $current_path/cdl.sh"\nalias its="sh $current_path/its.sh"\nalias upload="sh $current_path/upload.sh"\nalias download="sh $current_path/download.sh"\nalias lc="sh $current_path/count.sh"\n# alias unzip="uz"\n\n# Some kuaijiefangshi\nalias zshrc="vim ~/.zshrc"\nalias bashrc="vim ~/.bashrc"\nalias condarc="vim ~/.condarc"\nalias vimrc="vim ~/.vimrc"\nalias cls="clear"' >> ~/.zshrc
 ```
 
