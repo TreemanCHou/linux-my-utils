@@ -32,6 +32,21 @@ import os
 import time
 import psutil
 
+
+import argparse
+
+args = argparse.ArgumentParser(description="Analyze audit log.")
+args.add_argument("-ts", "--timestart", type=str, default="week-ago", help="Time start. An example date using the en_US.utf8 locale is 09/03/2009. An example of time is 18:00:00.")
+args.add_argument("-te", "--timeend", type=str, default="now", help="Time end. An example date using the en_US.utf8 locale is 09/03/2009. An example of time is 18:00:00.")
+args.add_argument("-c", "--cache", type=str, default="/data3/private/llm2022/audit.log", help="Cache file name.\nThis Program will create a file named audit.log in a directory. This file might be very large. So please make sure you have enough space.")
+args.add_argument("-n", "--not-all", action="store_true", help="Not show all logs.\nBy default, this program will show all logs including subprocesses, but most of them may not be valuable. If you want to show only the logs whose parent process is a shell (That means a user executed it straightly), please use this option.")
+args.add_argument("--no-color", action="store_true", help="Not print colorful.\nFor default, this program will print colorful logs. If you want to disable it, please use this option. This might be useful when you want to redirect the output to a file.")
+args.add_argument("--no-myself", action="store_true", help="Do not show your own logs, Only show other users' logs.\n ")
+args = args.parse_args()
+
+NO_COLOR = args.no_color
+NO_MYSELF = args.no_myself
+
 def get_process_name(pid):
     """
     Get the process name by pid.
@@ -82,6 +97,8 @@ def color_print(text, color):
         'bold_gray': '\033[1;90m',
         'bold_black': '\033[1;30m',
     }
+    if NO_COLOR:
+        return text
     return f"{colors[color]}{text}{colors['reset']}" if color in colors else text
 
 class logitem:
@@ -99,6 +116,15 @@ class logitem:
         self._pid = self._get_pid(pid_ppid_line)
         self._ppid = self._get_ppid(pid_ppid_line)
         self._workdir = self._get_workdir(itemtxt)
+        self.is_myself = False
+        if NO_MYSELF:
+            # get the username
+            my_username = pwd.getpwuid(os.getuid()).pw_name
+            if my_username == self._username:
+                # if the username is the same as the current user, skip this log
+                self.is_myself = True
+                # By default, the log is shown. Only when the --no-myself option is used, the log is not shown.
+
         try:
             self._is_parent_bash = is_bash(int(self._ppid))
         except ValueError:
@@ -129,7 +155,7 @@ class logitem:
             username = pwd.getpwuid(int(username)).pw_name
         except KeyError:
             username = f"unknown({username})"
-        return username + f"({int(auid)})"
+        return username
     
     def _get_command(self, itemtxt):
         """
@@ -228,21 +254,14 @@ class logitem:
             return f"{line1}\n{line2}\n{line3}"
         
 
-import argparse
-
-args = argparse.ArgumentParser(description="Analyze audit log.")
-args.add_argument("-ts", "--timestart", type=str, default="week-ago", help="Time start. An example date using the en_US.utf8 locale is 09/03/2009. An example of time is 18:00:00.")
-args.add_argument("-te", "--timeend", type=str, default="now", help="Time end. An example date using the en_US.utf8 locale is 09/03/2009. An example of time is 18:00:00.")
-args.add_argument("-c", "--cache", type=str, default="/data3/private/llm2022/audit.log", help="Cache file name.")
-args.add_argument("-n", "--not-all", action="store_true", help="Not show all logs.")
-args = args.parse_args()
-
 
 if __name__ == "__main__":
 
     # print(pwd.getpwuid(1015).pw_name)
     # audit log from command "sudo ausearch -k user_commands"
     command = "sudo ausearch -k user_commands -ts " + args.timestart + " -te " + args.timeend
+    print('[INFO] Executing Command: ' + command)
+    print('[INFO] Extracting audit log ...')
     # if len(sys.argv) > 1:
     #     command = sys.argv[1]
     # # print(command)
@@ -253,10 +272,14 @@ if __name__ == "__main__":
     with open(log_tmp_file, "r") as f:
         auditlog = f.read()
     # split log by ----
+    print('[INFO] Log extracted. Analyzing ...')
     logs = []
     for item in auditlog.split("----"):
         if len(item) > 0:
-            logs.append(logitem(item))
+            t = logitem(item)
+            if t.is_myself:
+                continue
+            logs.append(t)
 
     # print logs
     for item in logs:
