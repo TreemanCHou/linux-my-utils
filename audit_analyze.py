@@ -266,7 +266,7 @@ if __name__ == "__main__":
     #     command = sys.argv[1]
     # # print(command)
     # run command and get output
-    log_tmp_file = '/data3/private/llm2022/audit.log'
+    log_tmp_file = args.cache
 
     os.system(command + " > " + log_tmp_file)
     with open(log_tmp_file, "r") as f:
