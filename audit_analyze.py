@@ -261,14 +261,15 @@ if __name__ == "__main__":
     # audit log from command "sudo ausearch -k user_commands"
     command = "sudo ausearch -k user_commands -ts " + args.timestart + " -te " + args.timeend
     print('[INFO] Executing Command: ' + command)
-    print('[INFO] Extracting audit log ...')
     # if len(sys.argv) > 1:
     #     command = sys.argv[1]
     # # print(command)
     # run command and get output
     log_tmp_file = args.cache
-
+    
+    print('[INFO] Extracting audit log into ' + log_tmp_file)
     os.system(command + " > " + log_tmp_file)
+    print('    [INFO] Executing ' + command + " > " + log_tmp_file)
     with open(log_tmp_file, "r") as f:
         auditlog = f.read()
     # split log by ----
